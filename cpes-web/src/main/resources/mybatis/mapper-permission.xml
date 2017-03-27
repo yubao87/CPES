@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.cpes.dao.PermissionDao">
+	
+	<select id="queryById" resultType="permission">
+		select * from t_permission
+		where
+		id = #{id}
+	</select>
+	
+	<select id="queryAll" resultType="permission">
+		select * from t_permission
+	</select>
+	
+	<insert id="insertPermission">
+		insert into t_permission(
+			name, url, pid
+		) values(
+			#{name}, #{url}, #{pid}
+		)
+	</insert>
+	
+	<update id="updatePermission">
+		update t_permission
+		set name = #{name} , url = #{url}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById">
+		delete from t_permission where id = #{id}
+	</delete>
+</mapper>

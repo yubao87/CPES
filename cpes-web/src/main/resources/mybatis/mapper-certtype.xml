@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.cpes.dao.CerttypeDao">
+	
+	<select id="queryAll" resultType="certtype">
+		select * from t_acc_cert
+	</select>
+	
+	<select id="queryCerttypeList" resultType="certtype">
+		select
+		 	* 
+		from t_acc_cert
+		<where>
+			<if test="querytext != null">
+				and name like concat('%',#{querytext},'%') 
+			</if>
+		</where> 
+		limit #{start},#{size}
+	</select>
+	
+	<select id="queryCerttypeCount" resultType="int">
+		select count(*) from t_cert
+		<where>
+			<if test="querytext != null">
+				and name like concat('%', #{querytext},'%') 
+			</if>
+		</where> 
+	</select>
+	
+	<select id="queryCerttypeById" resultType="cert">
+		select * from t_cert where id = #{id}
+	</select>
+	
+	<insert id="insertCerttype">
+		insert into t_cert(
+			name
+		) values (
+			#{name}
+		)
+    </insert>
+    
+    <insert id="insertAccCerttype">
+    	insert into t_acc_cert(
+			acctype, certid
+		) values (
+			#{acctype}, #{certid}
+		)
+    </insert>
+    
+    <update id="updateCerttype">
+    	update t_cert set name = #{name} where id = #{id}
+    </update>
+    
+    <delete id="deleteCerttypeById">
+    	delete from t_cert where id = #{id}
+    </delete>
+    
+    <delete id="deleteBatCerttypes">
+		delete from t_cert where id in
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteByCerttypeid">
+		delete from t_cert_permission
+		where certid = #{certid}
+	</delete>
+	
+	<delete id="deleteAccCerttype">
+		delete from t_acc_cert where acctype = #{acctype} and certid = #{certid}
+	</delete>
+</mapper>

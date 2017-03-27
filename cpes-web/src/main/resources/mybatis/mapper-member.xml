@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.cpes.dao.MemberDao">
+
+	<!-- 前台认证申请做完之后，后台管理审核 	 -->   
+ 	<!-- 根据用户id 查询用户资质表和需要的资质信息名称 -->	
+    <select id="queryCertByMemberId" resultType="java.util.HashMap">
+        select
+            mc.*,
+            c.name
+        from t_member_cert mc
+        join t_cert c on c.id = mc.certid
+        where memberid = #{memberid}
+    </select>
+	<select id="queryMemberByTask" resultType="member">
+        select   *    from t_member
+        where id in (
+            select   memberid   from t_ticket   where piid = #{piid}
+        )
+    </select>
+    <update id="updateMemberStatus">
+        update t_member set status = '1' where id = #{id}
+    </update>
+    
+     <!-- 前台申请流程 -->    
+    <update id="updateTicketStatus">
+       update t_ticket set status = #{status} where id = #{id}
+    </update>
+
+	<!-- 3.1 -->
+	<update id="updateTicketPIID">
+        update t_ticket set piid = #{piid}, authcode = #{authcode}, status = #{status} where id = #{id}
+    </update>
+        
+    <update id="updateMemberEmail">
+        update t_member set email = #{email} where id = #{id}
+    </update>
+
+	<!-- 2.2 保存用户资质图片的路径 -->
+	<insert id="insertMemberCert">
+        insert into t_member_cert (
+            memberid,certid,iconpath
+        ) values (
+            #{memberid},#{certid},#{iconpath}
+        )
+    </insert>
+	
+    <select id="queryTicketByMemberId" resultType="ticket">
+        select * from t_ticket where memberid = #{memberid}
+    </select>
+    
+	<select id="queryMember" resultType="member">
+        select   *     from t_member
+        where loginacct = #{loginacct} and userpswd = #{userpswd}
+    </select>
+    
+    <!-- 更新账户类型 -->
+	<update id="updateMemberAcctype">
+		update t_member set acctype = #{acctype} where id = #{id}
+	</update>
+	
+	<!-- 更新会员基本信息 -->
+	<update id="updateMemberInfo">
+		update t_member set 
+		realname = #{realname} , cardnum = #{cardnum}, tel = #{tel}
+		where id = #{id}
+	</update>
+	
+	<!-- 0.1 -->
+    <insert id="inserTicket">
+        insert into t_ticket (
+            memberid, status
+        ) values (
+            #{memberid},#{status}
+        )
+    </insert>
+    
+	<!-- 0.0cert -->
+	<select id="queryCertByAcctype" resultType="cert">
+        select
+            *
+        from t_cert
+        where id in (
+            select
+                certid
+            from t_acc_cert
+            where acctype = #{acctype}
+        )
+    </select>
+    
+    <!--  -->
+</mapper>

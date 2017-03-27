@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.cpes.dao.RoleDao">
+	
+	<select id="queryPermissionsByRoleid" resultType="int">
+		select permissionid from t_role_permission where roleid =#{roleid}
+	</select>
+	
+	<select id="queryAll" resultType="role">
+		select * from t_role
+	</select>
+	
+	<select id="queryRoleList" resultType="role">
+		select
+		 	* 
+		from t_role
+		<where>
+			<if test="querytext != null">
+				and name like concat('%',#{querytext},'%') 
+			</if>
+		</where> 
+		limit #{start},#{size}
+	</select>
+	
+	<!-- /**查询总记录数*/ -->
+	<select id="queryRoleCount" resultType="int">
+		select count(*) from t_role
+		<where>
+			<if test="querytext != null">
+				and name like concat('%', #{querytext},'%') 
+			</if>
+		</where> 
+	</select>
+	
+	<select id="queryRoleById" resultType="role">
+		select * from t_role where id = #{id}
+	</select>
+	
+	<insert id="insertRole">
+		insert into t_role(
+			name
+		) values (
+			#{name}
+		)
+    </insert>
+    
+    <!-- 根据角色id删除角色许可表中的所有的角色id  删除之后再执行新增或修改权限操作 --> 
+	<delete id="deleteByRoleid">
+		delete from t_role_permission
+		where roleid = #{roleid}
+	</delete>
+   <!-- 因为分配权限数据量不大 所以每次新增或者修改权限许可的时候，都是先把之前的都删除 -->
+    <insert id="insertRolePermissions">
+		insert into t_role_permission (
+			roleid, permissionid
+		) values (
+			#{roleid}, #{permissionid}
+		)    	
+    </insert>
+    
+    <update id="updateRole">
+    	update t_role set name = #{name} where id = #{id}
+    </update>
+
+    <!-- 批量删除 页面传来的是Datas类中的属性List<Integer> ids; -->
+    <delete id="deleteBatRoles">
+		delete from t_role where id in
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	<!-- 根据id删除角色表中的角色 -->
+    <delete id="deleteRoleById">
+    	delete from t_role where id = #{id}
+    </delete>
+</mapper>

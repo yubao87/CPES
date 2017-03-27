@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<!-- 开启驼峰命名规则 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 开启延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="aggressiveLazyLoading" value="false" />
+	</settings>
+
+    <typeAliases>
+        <typeAlias type="com.atguigu.cpes.bean.User" alias="user"/>
+        <typeAlias type="com.atguigu.cpes.bean.Ticket" alias="ticket"/>
+        <typeAlias type="com.atguigu.cpes.bean.Member" alias="member"/>
+        <typeAlias type="com.atguigu.cpes.bean.Role" alias="role"/>
+        <typeAlias type="com.atguigu.cpes.bean.Cert" alias="cert"/>
+        <typeAlias type="com.atguigu.cpes.bean.Certtype" alias="certtype"/>
+        <typeAlias type="com.atguigu.cpes.bean.Permission" alias="permission"/>
+        <typeAlias type="com.atguigu.cpes.bean.Menu" alias="menu"/>
+    </typeAliases>
+</configuration>

@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/ftl/member=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/apply-1-userinfo.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/apply-2-certfile.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/apply-3-email.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/apply-4-checkcode.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/apply-4-wait.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/apply-5-code.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/member/cert.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/ftl/process/index.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/index.jsp=UTF-8
